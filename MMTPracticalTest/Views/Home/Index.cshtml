@@ -1,0 +1,186 @@
+﻿@model IEnumerable<MMTPracticalTest.Models.mmt_table>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+    @Html.Raw(TempData["agreeView"]);
+    @Html.Raw(TempData["dataSubmited"]);
+
+
+<p>
+    @Html.ActionLink("Add", "Create")
+</p>
+
+    <script src="~/Scripts/jquery-3.6.3.slim.min.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+   
+    <button type="button" id="addbtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Insert</button>
+
+
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+     <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Customer Details Form</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+
+                     <div class="modal-body">
+                         <div id="mcontent">
+                            <h3>Loading..</h3>
+                         
+                         </div>
+                        
+                      
+                      </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phoneno)
+        </th>       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phoneno)
+        </td>
+       
+        <td>
+
+
+
+
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) | 
+            
+                <button type="button" data-bs-id="@item.id" class="editbtn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                 @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+     <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Customer Details Form</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+
+                     <div class="modal-body">
+                         <div id="meditcontent">
+                            <h3>Loading..</h3>
+                         
+                         </div>
+                        
+                      
+                      </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+            |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+
+<script src="~/Scripts/jquery-3.6.3.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+   
+
+    $("#addbtn").click(function () {
+   
+          $.ajax( {
+                type: "post",
+                url: "/Home/Index1",
+                contentType:"html",
+                success: function (response) {
+                    $("#mcontent").empty();
+                    $("#mcontent").append(response);
+                }
+
+           });
+
+            
+
+        });
+
+
+    $(".meditbtn").click(function () {
+            var id=$(this).data("id");
+            console.log(id);
+
+          $.ajax( {
+                type: "post",
+                url: "/Home/Edit1",
+                data: {"editid":id},
+                contentType:"html",
+                success: function (response) {
+                    $("#id").val(response.id);
+                    $("#name").val(response.name);
+                    $("#email").val(response.email);
+                    $("#phoneno").val(response.phoneno);
+                    $("#address").val(response.address);
+                    $("#state").val(response.state);
+                    $("#city").val(response.city);
+                }
+
+           });
+
+            
+
+        });
+
+
+
+    });
+
+</script>

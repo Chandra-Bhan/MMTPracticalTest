@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="mmtdatabaseModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="city_table">
+          <Key>
+            <PropertyRef Name="cityid" />
+          </Key>
+          <Property Name="cityid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cityname" Type="varchar" MaxLength="50" />
+          <Property Name="sid" Type="int" />
+        </EntityType>
+        <EntityType Name="mmt_table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="phoneno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="varchar(max)" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="state_table">
+          <Key>
+            <PropertyRef Name="stateid" />
+          </Key>
+          <Property Name="stateid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statename" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__city_table__sid__286302EC">
+          <End Role="state_table" Type="Self.state_table" Multiplicity="0..1" />
+          <End Role="city_table" Type="Self.city_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state_table">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="city_table">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mmtdatabaseModel1StoreContainer">
+          <EntitySet Name="city_table" EntityType="Self.city_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mmt_table" EntityType="Self.mmt_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state_table" EntityType="Self.state_table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__city_table__sid__286302EC" Association="Self.FK__city_table__sid__286302EC">
+            <End Role="state_table" EntitySet="state_table" />
+            <End Role="city_table" EntitySet="city_table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mmtdatabaseModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="mmt_table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="mmtdatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="mmt_table" EntityType="Self.mmt_table" />
+          <EntitySet Name="city_table" EntityType="mmtdatabaseModel1.city_table" />
+          <EntitySet Name="state_table" EntityType="mmtdatabaseModel1.state_table" />
+          <AssociationSet Name="FK__city_table__sid__286302EC" Association="mmtdatabaseModel1.FK__city_table__sid__286302EC">
+            <End Role="state_table" EntitySet="state_table" />
+            <End Role="city_table" EntitySet="city_table" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="city_table">
+          <Key>
+            <PropertyRef Name="cityid" />
+          </Key>
+          <Property Name="cityid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cityname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sid" Type="Int32" />
+          <NavigationProperty Name="state_table" Relationship="mmtdatabaseModel1.FK__city_table__sid__286302EC" FromRole="city_table" ToRole="state_table" />
+        </EntityType>
+        <EntityType Name="state_table">
+          <Key>
+            <PropertyRef Name="stateid" />
+          </Key>
+          <Property Name="stateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="city_table" Relationship="mmtdatabaseModel1.FK__city_table__sid__286302EC" FromRole="state_table" ToRole="city_table" />
+        </EntityType>
+        <Association Name="FK__city_table__sid__286302EC">
+          <End Type="mmtdatabaseModel1.state_table" Role="state_table" Multiplicity="0..1" />
+          <End Type="mmtdatabaseModel1.city_table" Role="city_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state_table">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="city_table">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mmtdatabaseModel1StoreContainer" CdmEntityContainer="mmtdatabaseEntities1">
+          <EntitySetMapping Name="mmt_table">
+            <EntityTypeMapping TypeName="mmtdatabaseModel1.mmt_table">
+              <MappingFragment StoreEntitySet="mmt_table">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneno" ColumnName="phoneno" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="city_table">
+            <EntityTypeMapping TypeName="mmtdatabaseModel1.city_table">
+              <MappingFragment StoreEntitySet="city_table">
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="cityname" ColumnName="cityname" />
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="state_table">
+            <EntityTypeMapping TypeName="mmtdatabaseModel1.state_table">
+              <MappingFragment StoreEntitySet="state_table">
+                <ScalarProperty Name="statename" ColumnName="statename" />
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

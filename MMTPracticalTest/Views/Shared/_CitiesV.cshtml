@@ -1,0 +1,9 @@
+﻿@model MMTPracticalTest.Models.city_table
+
+
+   
+<option value="0">--Select City--</option>
+@foreach(var item in ViewBag.Cities)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
